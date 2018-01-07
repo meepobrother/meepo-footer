@@ -5,6 +5,7 @@ footer {
     right: 0px;
     background: #fff;
     box-shadow: 4px -4px 6px #e4e4e4;
+    height: 44px;
     .footer-container {
         display: flex;
         flex-direction: row;
@@ -16,7 +17,7 @@ footer {
             flex-direction: column;
             justify-content: center;
             cursor: pointer;
-            min-height: 44px;
+            min-height: 55px;
             ion {
                 font-size: 30px;
             }
