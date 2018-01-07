@@ -57,14 +57,14 @@ footer {
         height: 55px;
     }
     to {
-        transform: translate3d(0, -100%, 0);
-        height: 0;
+        transform: translate3d(0, 100%, 0);
+        height: 0px;
     }
 }
 
 @keyframes footerSlideInUp {
     0% {
-        transform: translateZ(0, -100%, 0);
+        transform: translateZ(0, 100%, 0);
         height: 0;
         opacity: 0;
     }
