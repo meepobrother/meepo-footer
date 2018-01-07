@@ -1,4 +1,4 @@
-.footer {
+footer {
     position: absolute;
     bottom: 0px;
     left: 0px;
@@ -16,8 +16,9 @@
             flex-direction: column;
             justify-content: center;
             cursor: pointer;
+            min-height: 44px;
             ion {
-                font-size: 20px;
+                font-size: 30px;
             }
             &.on {
                 color: red;
@@ -35,5 +36,39 @@
                 transform: scaleX(.5);
             }
         }
+    }
+    &.animated {
+        animation-duration: 1s;
+        animation-fill-mode: both;
+    }
+    &.footerSlideOutDown {
+        animation-name: footerSlideOutDown
+    }
+    &.footerSlideInUp {
+        animation-name: footerSlideInUp
+    }
+}
+
+@keyframes footerSlideOutDown {
+    0% {
+        transform: translateZ(0);
+        height: 55px;
+    }
+    to {
+        transform: translate3d(0, -100%, 0);
+        height: 0;
+    }
+}
+
+@keyframes footerSlideInUp {
+    0% {
+        transform: translateZ(0, -100%, 0);
+        height: 0;
+        opacity: 0;
+    }
+    to {
+        transform: translate3d(0);
+        height: 55px;
+        opacity: 1;
     }
 }

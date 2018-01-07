@@ -1,8 +1,6 @@
-<div class="footer">
-    <div class="footer-container">
-        <div class="footer-item" (click)="_onItem(item)" [class.on]="item.active === 'on'" *checks="let item of data">
-            <ion [name]="item.icon"></ion>
-            <p>{{item.title}}</p>
-        </div>
+<div class="footer-container">
+    <div class="footer-item" (click)="_onItem(item)" [class.on]="item.active === 'on'" *checks="let item of data">
+        <ion [name]="item.icon"></ion>
+        <p>{{item.title}}</p>
     </div>
 </div>

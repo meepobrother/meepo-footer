@@ -3,7 +3,7 @@ import {
   ViewChild, ElementRef, ChangeDetectorRef
 } from '@angular/core';
 import { EventService } from 'meepo-event';
-
+import { FOOTER_HIDDEN, FOOTER_SHOWN } from '../../src/app/app';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -18,34 +18,12 @@ export class AppComponent {
 
     let version = new Date(now.getFullYear(), now.getMonth() + 1, now.getDate()).getTime();
     this.event.checkVersion(version);
-
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./sw.js', { scope: './assets/' }).then(function (reg) {
-        if (reg.installing) {
-          console.log('Service worker installing');
-        } else if (reg.waiting) {
-          console.log('Service worker installed');
-        } else if (reg.active) {
-          console.log('Service worker active');
-        }
-      }).catch(function (error) {
-        console.log('Registration failed with ' + error);
-      });
-    }
   }
 
-  test() {
-    this.event.publish('role.change', {
-      title: '管理员',
-      code: 'admin',
-      items: ['admin']
-    });
+  showFooter() {
+    this.event.publish(FOOTER_SHOWN, '');
   }
-  quit() {
-    this.event.publish('role.change', {
-      title: '游客',
-      code: 'fans',
-      items: ['fans']
-    });
+  hideFooter() {
+    this.event.publish(FOOTER_HIDDEN, '');
   }
 }

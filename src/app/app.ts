@@ -42,3 +42,4 @@ export class FooterModule {
     }
 }
 
+export * from './event';

@@ -1,14 +1,16 @@
 import {
     Component, OnInit,
     ChangeDetectorRef,
-    Inject, InjectionToken, Optional
+    Inject, InjectionToken, Optional,
+    Renderer2, ElementRef, ViewEncapsulation,
+    HostBinding
 } from '@angular/core';
 import { MeepoCache } from 'meepo-base';
 import { StoreService } from 'meepo-store';
 import { UtilService } from 'meepo-core';
 import { AxiosService } from 'meepo-axios';
 import { EventService } from 'meepo-event';
-import { VERSION_CHANGE } from '../event';
+import { VERSION_CHANGE, FOOTER_SHOWN, FOOTER_HIDDEN } from '../event';
 export const FOOTER_CONFIG = new InjectionToken('footer.config');
 
 import { Title } from '@angular/platform-browser';
@@ -24,11 +26,13 @@ export interface FooterConfigDefault {
     templateUrl: './footer.html',
     styleUrls: [
         './footer.scss'
-    ]
+    ],
+    encapsulation: ViewEncapsulation.None
 })
 export class FooterComponent extends MeepoCache {
     key: string = 'footer.component';
     data: FooterItemInter[] = [];
+    @HostBinding('class.animated') _animated: boolean = true;
     constructor(
         store: StoreService,
         cd: ChangeDetectorRef,
@@ -37,12 +41,23 @@ export class FooterComponent extends MeepoCache {
         @Inject(FOOTER_CONFIG) public cfg: FooterConfigDefault,
         public axios: AxiosService,
         public event: EventService,
-        @Optional() private router: Router
+        @Optional() private router: Router,
+        public render: Renderer2,
+        public ele: ElementRef
     ) {
         super(store, cd, title);
         this.event.subscribe(VERSION_CHANGE, () => {
             this.clearAll();
             this.meepoInit();
+        });
+
+        this.event.subscribe(FOOTER_SHOWN, () => {
+            this.render.removeClass(this.ele.nativeElement, 'footerSlideOutDown');
+            this.render.addClass(this.ele.nativeElement, 'footerSlideInUp');
+        });
+        this.event.subscribe(FOOTER_HIDDEN, () => {
+            this.render.removeClass(this.ele.nativeElement, 'footerSlideInUp');
+            this.render.addClass(this.ele.nativeElement, 'footerSlideOutDown');
         });
     }
 
