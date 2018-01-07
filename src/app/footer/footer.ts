@@ -33,6 +33,7 @@ export class FooterComponent extends MeepoCache {
     key: string = 'footer.component';
     data: FooterItemInter[] = [];
     @HostBinding('class.animated') _animated: boolean = true;
+    show: boolean = true;
     constructor(
         store: StoreService,
         cd: ChangeDetectorRef,
@@ -52,12 +53,18 @@ export class FooterComponent extends MeepoCache {
         });
 
         this.event.subscribe(FOOTER_SHOWN, () => {
-            this.render.removeClass(this.ele.nativeElement, 'footerSlideOutDown');
-            this.render.addClass(this.ele.nativeElement, 'footerSlideInUp');
+            if(!this.show){
+                this.render.removeClass(this.ele.nativeElement, 'footerSlideOutDown');
+                this.render.addClass(this.ele.nativeElement, 'footerSlideInUp');
+                this.show = true;
+            }
         });
         this.event.subscribe(FOOTER_HIDDEN, () => {
-            this.render.removeClass(this.ele.nativeElement, 'footerSlideInUp');
-            this.render.addClass(this.ele.nativeElement, 'footerSlideOutDown');
+            if (this.show) {
+                this.render.removeClass(this.ele.nativeElement, 'footerSlideInUp');
+                this.render.addClass(this.ele.nativeElement, 'footerSlideOutDown');
+                this.show = false;
+            }
         });
     }
 
